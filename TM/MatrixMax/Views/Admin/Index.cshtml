@@ -1,0 +1,285 @@
+﻿@{ MatrixMax.Models.Usuario usuarioLogado = (MatrixMax.Models.Usuario)HttpContext.Current.Session["usuarioLogado"]; }
+<!-- TÍTULO CONTEÚDO-->
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Administrador</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Usuários</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TÍTULO CONTEÚDO-->
+<!--CONTEÚDO-->
+<div class="p-3 mt-3">
+    <div class="card">
+        <div class="card-header">
+            <h4>Gerenciar Usuários</h4>
+        </div>
+        <div class="card-body">
+            <div class="default-tab">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-usuarios-tab" data-toggle="tab" href="#nav-usuarios" role="tab" aria-controls="nav-usuarios" aria-selected="true">Usuários</a>
+                        <a class="nav-item nav-link" id="nav-novoUsuario-tab" data-toggle="tab" href="#nav-novoUsuario" role="tab" aria-controls="nav-novoUsuario" aria-selected="false">Novo Usuário</a>
+                    </div>
+                </nav>
+                <div class="tab-content pl-3 pt-2 text-center" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-usuarios" role="tabpanel" aria-labelledby="nav-usuarios-tab">
+                        <div class="row" id="mensagensContainer"></div>
+                        <table id="bootstrap-data-table-Usuarios" class="table-striped table table-dark table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Login</th>
+                                    <th>Pessoa</th>
+                                    <th>Privilégio</th>
+                                    <th>Ativar <i class="fa fa-check"></i> | Desativar <i class="fa fa-ban"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="nav-novoUsuario" role="tabpanel" aria-labelledby="nav-novoUsuario-tab">
+                        <div class="row" id="mensagensContainerErrosForm"></div>
+                        <form action="/Usuario/Adiciona" method="post" id="FormUsuario" class="">
+                            <div class="col-lg-4">
+                                <div class="card rounded">
+                                    <div class="card-header text-center"><h6 class="display-5">Etapa 1: Usuário</h6></div>
+                                    <div class="card-body card-block mb-2">
+                                        <input type="text" hidden name="usuario.Ativo" value="true">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">Login</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="loginUsuario" name="usuario.Login" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">Senha</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="password" id="senhaUsuario" name="senhaUsuario" class="form-control">
+                                                <input type="password" placeholder="Repita a senha" id="senhaUsuarioRepetida" name="senhaUsuarioRepetida" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Privilégio</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <select id="tipoUsuario" name="usuario.TipoUsuario" class="form-control">
+                                                    <option value="">Selecione...</option>
+                                                    <option value="F">Funcionário</option>
+                                                    <option value="A">Administrador</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="card rounded">
+                                            <div class="card-body card-block">
+                                                <div class="form-actions form-group text-center mb-0">
+                                                    <div class="col w-100 mb-2">
+                                                        <button type="reset" class="btn btn-block btn-danger rounded">
+                                                            <i class="fa fa-ban"></i> Limpar
+                                                        </button>
+                                                    </div>
+                                                    <div class="col w-100">
+                                                        <button type="submit" class="btn btn-success btn-block rounded">
+                                                            <i class="fa fa-check"></i> Cadastrar usuário
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card rounded">
+                                    <div class="card-header text-center"><h6 class="display-5">Etapa 2: Dados Pessoais</h6></div>
+                                    <div class="card-body card-block mb-2">
+                                        <div class="row text-center mt-2 mb-3">
+                                            <div class="col">
+                                                <div class="btn-group btn-group-sm btn-group-toggle mb-2" data-toggle="buttons">
+                                                    <label class="btn btn-secondary rounded-left text-center active" id="labelRadioPessoaFisica">
+                                                        <input type="radio" name="radioPessoaFisica" id="radioPessoaFisica" checked> Pessoa física
+                                                    </label>
+                                                    <label class="btn btn-secondary rounded-right" id="labelRadioPessoaJuridica">
+                                                        <input type="radio" name="radioPessoaJuridica" id="radioPessoaJuridica"> Pessoa jurídica
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="text" id="tipoPessoa" hidden name="usuario.Pessoa.TipoPessoa" value="F" class="form-control">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">Email</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="emailPessoa" name="usuario.Pessoa.Email" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Telefone</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="telefonePessoa" name="usuario.Pessoa.Telefone" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group divsFisicas">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">Nome</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="nomePessoa" name="usuario.Pessoa.NomeRazaoSocial" class="form-control inputsFisicos">
+                                            </div>
+                                        </div>
+                                        <div class="form-group divsFisicas">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">CPF</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="cpfPessoa" name="usuario.Pessoa.CpfCnpj" class="form-control inputsFisicos">
+                                            </div>
+                                        </div>
+                                        <div class="form-group divsJuridicas" id="divRazaoSocialPessoa">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Razão Social</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="razaoSocialPessoa" name="usuario.Pessoa.NomeRazaoSocial" disabled class="form-control inputsJuridicos">
+                                            </div>
+                                        </div>
+                                        <div class="form-group divsJuridicas" id="divCNPJPessoa">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">CNPJ</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="cnpjPessoa" name="usuario.Pessoa.CpfCnpj" disabled class="form-control inputsJuridicos">
+                                            </div>
+                                        </div>
+                                        <div class="form-group divsJuridicas" id="divInscricaoEstadualPessoa">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-75">Inscrição Estadual</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="inscricaoEstadualPessoa" name="usuario.Pessoa.InscricaoEstadual" disabled class="form-control inputsJuridicos">
+                                            </div>
+                                        </div>
+                                        <div class="form-group divsJuridicas" id="divNomeFantasiaPessoa">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Nome Fantasia</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="nomeFantasiaPessoa" name="usuario.Pessoa.NomeFantasia" disabled class="form-control inputsJuridicos">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card rounded">
+                                    <div class="card-header text-center"><h6 class="display-5">Etapa 3: Endereço</h6></div>
+                                    <div class="card-body card-block">
+                                        <input type="text" id="pessoaEndereco" hidden name="usuario.Pessoa.Endereco.PessoaId" class="form-control">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">CEP</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="cepEndereco" name="usuario.Pessoa.Endereco.Cep" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Logradouro</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="logradouroEndereco" name="usuario.Pessoa.Endereco.Logradouro" readonly class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Número</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="numeroEndereco" name="usuario.Pessoa.Endereco.Numero" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Complemento</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="complementoEndereco" name="usuario.Pessoa.Endereco.Complemento" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-25">Bairro</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="bairroEndereco" name="usuario.Pessoa.Endereco.Bairro" readonly class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Cidade</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="cidadeEndereco" name="usuario.Pessoa.Endereco.Cidade" readonly class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Estado</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="estadoEndereco" name="usuario.Pessoa.Endereco.Estado" readonly class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="col w-50"></div><div class="input-group-addon w-50">Referência</div><div class="col w-50"></div>
+                                            </div>
+                                            <div class="input-group">
+                                                <input type="text" id="referenciaEndereco" name="usuario.Pessoa.Endereco.Referencia" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--/.col-->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--CONTEÚDO-->
+
+@section scriptsUsuarios {
+    @Scripts.Render("~/bundles/tables/js")
+    <script src="~/Content/js/jquery.mask.js"></script>
+    <script src="~/Content/js/vendor/jquery.form.min.js"></script>
+    <script src="~/Content/js/modalFix.js"></script>
+    <script src="~/Content/js/validation/jquery.validate.min.js"></script>
+    <script src="~/Content/js/usuarios/scriptsDataTables.js"></script>
+    <script src="~/Content/js/usuarios/scriptsForms.js"></script>
+}

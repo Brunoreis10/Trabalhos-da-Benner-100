@@ -1,0 +1,107 @@
+body {
+    line-height: 1.5;
+    font-size: 120%;
+    background-color: #F2FFFC;
+    font-family: "Crimson Text", "Times New Roman", serif;
+}
+main {
+    float: left;
+    width: 85%;
+}
+main a {
+    color: #851944;
+}
+strong {
+    font-weight: bold;
+}
+em {
+    font-style: italic;
+}
+.titulo-principal {
+    font-size: 60px;
+    border-bottom: 10px solid black;
+    padding: 25px;
+    background-color: #851944; /*rgb(133, 25, 68)*/
+    color: #FFF;
+    text-align: center;
+    font-family: "Open Sans Condensed", "Arial", sans-serif;
+    text-transform: uppercase;
+}
+.titulo-navegacao {
+    font-family: "Open Sans Condensed", "Arial", sans-serif;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+.subtitulos {
+    font-size: 30px;
+    font-family: "Open Sans Condensed", "Arial", sans-serif;
+    clear: both;
+}
+.texto {
+    text-align: justify; 
+    margin: 20px 0;
+}
+.navegacao-site {
+    text-align: center;
+    background-color: #3C1D3D;
+    color: #F2FFFC;
+    padding: 20px;
+    width: 15%;
+    position: relative;
+    top: 310px;
+}
+#rodape-pagina {
+    background-color: #000;
+    color: #F2FFFC;
+    padding: 10px;
+    clear: both;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.navegacao-site a {
+    color: inherit;
+    font-family: "Open Sans Condensed", "Arial", sans-serif;
+    text-decoration: none;
+    text-transform: lowercase;
+}
+.conteudo {
+    width: 720px;
+    margin: auto;
+    padding: 40px 0;
+    padding-bottom: 80px;
+    overflow: auto;
+}
+.icones-sociais li {
+    margin-top:20px;
+    display: inline-block;
+}
+.icones-sociais a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    /*text-indent: -9999px;*/
+    font-size: 0;
+}
+.github {
+    background-image: url(../img/github.png);
+}
+.twitter {
+    background-image: url(../img/twitter.png);
+}
+.linkedin {
+    background-image: url(../img/linkedin.png);
+}
+.navegacao-site, .minha-foto {
+    border-left: 10px solid black;
+    border-bottom: 10px solid black;
+    float: right;
+    box-sizing: border-box;
+}
+.minha-foto {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

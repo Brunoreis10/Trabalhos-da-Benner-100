@@ -1,0 +1,87 @@
+﻿<!-- TÍTULO CONTEÚDO-->
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Produto</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Estoque</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TÍTULO CONTEÚDO-->
+<!--CONTEÚDO-->
+<div class="p-3 text-center">
+    <div class="card">
+        <div class="card-header">
+            <h3>Controle de Estoque</h3>
+        </div>
+        <div class="card-body text-center">
+            <div class="default-tab">
+                <div class="row">
+                    <div class="col-4 mt-2">
+                        <div class="card rounded">
+                            <div class="card-body card-block">
+                                <div class="form-group mb-0">
+                                    <input type="text" id="filtroNome" placeholder="Filtrar por nome" class="form-control mb-2" />
+                                </div>
+                            </div>
+                        </div>
+                        <h5 class="pb-4 display-5 mt-lg-5 mb-4" id="labelEstoque">Clique no nome do produto para repor o estoque.</h5>
+                        <div class="card rounded" id="dialogReporEstoque">
+                            <div class="card-body card-block">
+                                <div class="form-group mb-0">
+                                    <div class="row">
+                                        <div class="col w-100">
+                                            <input type="text" id="unidadesEstoque" placeholder="Uni." class="form-control mb-2" />
+                                        </div>
+                                        <div class="col w-50">
+                                            <button class="btn btn-block btn-success" id="botaoRepoeEstoque">Confirmar</button>
+                                        </div>
+                                        <div class="col w-50">
+                                            <button class="btn btn-block btn-danger" id="botaoCancelaReporEstoque">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="mensagensEstoqueContainer" class="msgErroForm"></span>
+                    </div>
+
+                    <div class="col-8">
+                        <div class="table-responsive">
+                            <table id="bootstrap-data-table-Estoque" class="table table-sm">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="align-middle">Id</th>
+                                        <th class="align-middle">Produto</th>
+                                        <th class="align-middle">Estoque Atual</th>
+                                        <th class="align-middle">Estoque Mínimo</th>
+                                        <th class="align-middle">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.col-->
+<!--CONTEÚDO-->
+@section scriptsEstoque {
+    @Scripts.Render("~/bundles/tables/js")
+    <script src="~/Content/js/jquery.mask.js"></script>
+    <script src="~/Content/js/lib/data-table/dataTables.rowGroup.min.js"></script>
+    <script src="~/Content/js/produto/scriptsEstoque.js"></script>
+}

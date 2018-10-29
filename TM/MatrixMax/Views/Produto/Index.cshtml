@@ -1,0 +1,520 @@
+﻿<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Gerenciar produtos</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li><a href="/Produto/Index">Produtos</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-3 text-center">
+    <div class="card">
+        <div class="card-header">
+            <h3>Produtos - Categorias - Subcategorias - Marcas</h3>
+        </div>
+        <div class="card-body">
+            <div class="default-tab">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-produtos-tab" data-toggle="tab" href="#nav-produtos" role="tab" aria-controls="nav-produtos" aria-selected="true">Produtos</a>
+                        <a class="nav-item nav-link" id="nav-categorias-tab" data-toggle="tab" href="#nav-categorias" role="tab" aria-controls="nav-categorias" aria-selected="false">Categorias</a>
+                        <a class="nav-item nav-link" id="nav-subcategorias-tab" data-toggle="tab" href="#nav-subcategorias" role="tab" aria-controls="nav-subcategorias" aria-selected="false">Subcategorias</a>
+                        <a class="nav-item nav-link" id="nav-marcas-tab" data-toggle="tab" href="#nav-marcas" role="tab" aria-controls="nav-marcas" aria-selected="false">Marcas</a>
+                    </div>
+                </nav>
+                <div class="tab-content pl-3 pt-2 text-center" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-produtos" role="tabpanel" aria-labelledby="nav-produtos-tab">
+                        <div id="mensagensContainer"></div>
+                        <div class="btn-group-sm btn-group-toggle mb-3" data-toggle="buttons">
+                            <label class="btn btn-success active focus mr-0 rounded" id="RadioAtivos">
+                                <input type="radio" name="opcaoAtivoDesativo" onchange="processaAtivoDesativo()" value="ativa" autocomplete="off" checked> Ativos
+                            </label>
+                            <label class="btn btn-secondary rounded" id="RadioDesativos">
+                                <input type="radio" name="opcaoAtivoDesativo" onchange="processaAtivoDesativo()" value="desativa" autocomplete="off"> Desativados
+                            </label>
+                        </div>
+                        <table id="bootstrap-data-table" class="table-striped table table-dark table-bordered ">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Subcategoria.CategoriaId</th>
+                                    <th>SubcategoriaId</th>
+                                    <th>PrecoRecarga</th>
+                                    <th>PrecoTroca</th>
+                                    <th>MarcaId</th>
+                                    <th>Nome</th>
+                                    <th>Preço(s)</th>
+                                    <th>Marca</th>
+                                    <th>Estoque Mínimo</th>
+                                    <th>Estoque</th>
+                                    <th>Categoria - Subcategoria</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="modal fade" id="ModalRemover" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="smallmodalLabel">Desativar produto</h5>
+                                        <button type="button" id="fechaModalRemover" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="dialogoDesativar"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary" onclick="apagaProduto()">Confirmar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="ModalAtivar" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="smallmodalLabel">Reativar produto</h5>
+                                        <button type="button" id="fechaModalReativar" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="dialogoReativar"></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                        <button type="button" class="btn btn-primary" onclick="reativaProduto()">Confirmar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="ModalAdicionar" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="largeModalLabel">Adicionar Produto</h5>
+                                        <button type="button" id="fechaModalAdd" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body card-block">
+                                                    <div class="alert alert-danger" id="msgErroProdutoAdd" hidden role="alert"><p id="textoMsgErroProdutoAdd"></p></div>
+                                                    <form action="/Produto/Adiciona" method="post" id="FormAdiciona">
+                                                        <input type="text" name="produto.Ativo" value="true" hidden class="form-control">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Nome</div>
+                                                                <input type="text" id="nomeAdd" name="produto.Nome" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Marca</div>
+                                                                <select name="produto.MarcaId" id="MarcaAdd" class="form-control">
+                                                                    <option value="">Selecione...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Categoria</div>
+                                                                <select name="CategoriaAdd" id="categoriaAdd" onchange="pegaSubcategorias('Add')" class="form-control">
+                                                                    <option value="">Selecione...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Subcategoria</div>
+                                                                <select name="produto.SubcategoriaId" id="subcategoriaAdd" disabled class="form-control">
+                                                                    <option value="">Selecione...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Estoque inicial</div>
+                                                                <input type="text" id="estoqueAdd" name="produto.Estoque" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Estoque mínimo</div>
+                                                                <input type="text" id="estoqueMinimoAdd" name="produto.EstoqueMinimo" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Preço unitário</div>
+                                                                <div class="input-group-addon">R$</div>
+                                                                <input type="text" id="precoUnitarioAdd" name="produto.PrecoUnitario" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" id="precoRecargaDivAdd">
+                                                            <div class="input-group">
+                                                                <label class="switch switch-default switch-secondary-outline-alt mr-2">
+                                                                    <input type="checkbox" id="TogglePrecoRecargaAdd" onchange="processaTogglePrecos('Recarga', 'Add')" class="switch-input">
+                                                                    <span class="switch-label"></span>
+                                                                    <span class="switch-handle"></span>
+                                                                </label>
+                                                                <div class="input-group-addon">Preço recarga</div>
+                                                                <div class="input-group-addon">R$</div>
+                                                                <input type="text" id="precoRecargaAdd" name="produto.PrecoRecarga" disabled class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" id="precoTrocaDivAdd">
+                                                            <div class="input-group">
+                                                                <label class="switch switch-default switch-secondary-outline-alt mr-2">
+                                                                    <input type="checkbox" id="TogglePrecoTrocaAdd" onchange="processaTogglePrecos('Troca', 'Add')" class="switch-input">
+                                                                    <span class="switch-label"></span>
+                                                                    <span class="switch-handle"></span>
+                                                                </label>
+                                                                <div class="input-group-addon">Preço troca</div>
+                                                                <div class="input-group-addon">R$</div>
+                                                                <input type="text" id="precoTrocaAdd" name="produto.PrecoTroca" disabled class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-actions form-group text-center">
+                                                            <button type="submit" class="btn btn-primary">Cadastrar produto</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="largeModalLabelEditar">Editar Produto</h5>
+                                        <button type="button" id="fechaModalEdita" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body card-block">
+                                                    <div class="alert alert-danger" id="msgProdutoNaoAlterado" hidden role="alert">
+                                                        <p id="textoMsgProdutoNaoAlterado"></p>
+                                                    </div>
+                                                    <form action="/Produto/Atualiza" method="post" id="FormAtualiza">
+                                                        <input type="text" id="IdEditar" name="produtoedit.Id" hidden class="form-control">
+                                                        <input type="text" name="produtoedit.Ativo" value="true" hidden class="form-control">
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Nome</div>
+                                                                <input type="text" id="nomeEditar" name="produtoedit.Nome" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Marca</div>
+                                                                <select name="produtoedit.MarcaId" id="MarcaEditar" class="form-control">
+                                                                    <option value="">Selecione...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Categoria</div>
+                                                                <select name="CategoriaEdit" id="categoriaEditar" onchange="pegaSubcategorias('Editar')" class="form-control">
+                                                                    <option value="">Selecione...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Subcategoria</div>
+                                                                <select name="produtoedit.SubcategoriaId" id="subcategoriaEditar" disabled class="form-control">
+                                                                    <option value="">Selecione...</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Estoque mínimo</div>
+                                                                <input type="text" id="estoqueEditar" name="produtoedit.Estoque" hidden class="form-control">
+                                                                <input type="text" id="estoqueMinimoEditar" name="produtoedit.EstoqueMinimo" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-group">
+                                                                <div class="input-group-addon">Preço unitário</div>
+                                                                <div class="input-group-addon">R$</div>
+                                                                <input type="text" id="precoUnitarioEditar" name="produtoedit.PrecoUnitario" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" id="precoRecargaDivEditar">
+                                                            <div class="input-group">
+                                                                <label class="switch switch-default switch-secondary-outline-alt mr-2">
+                                                                    <input type="checkbox" id="TogglePrecoRecargaEditar" onchange="processaTogglePrecos('Recarga', 'Editar')" class="switch-input">
+                                                                    <span class="switch-label"></span>
+                                                                    <span class="switch-handle"></span>
+                                                                </label>
+                                                                <div class="input-group-addon">Preço recarga</div>
+                                                                <div class="input-group-addon">R$</div>
+                                                                <input type="text" id="precoRecargaEditar" name="produtoedit.PrecoRecarga" disabled class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" id="precoTrocaDivEditar">
+                                                            <div class="input-group">
+                                                                <label class="switch switch-default switch-secondary-outline-alt mr-2">
+                                                                    <input type="checkbox" id="TogglePrecoTrocaEditar" onchange="processaTogglePrecos('Troca', 'Editar')" class="switch-input">
+                                                                    <span class="switch-label"></span>
+                                                                    <span class="switch-handle"></span>
+                                                                </label>
+                                                                <div class="input-group-addon">Preço troca</div>
+                                                                <div class="input-group-addon">R$</div>
+                                                                <input type="text" id="precoTrocaEditar" name="produtoedit.PrecoTroca" disabled class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-actions form-group text-center">
+                                                            <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-categorias" role="tabpanel" aria-labelledby="nav-categorias-tab">
+                        <div class="row" id="mensagensContainerCategorias"></div>
+                        <div class="row">
+                            <div class="col w-25"></div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-success rounded" id="BotaoAddCategorias">
+                                    Nova categoria
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="botaoPesquisaCategoria" placeholder="Pesquisar por nome..." />
+                            </div>
+                            <div class="col w-25"></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-4 mx-auto">
+                                <form action="/Categoria/Adiciona" method="post" id="FormAddCategoria" class="form-control">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Nome</div>
+                                            <input type="text" id="nomeCategoriaAdd" name="categoria.Nome" required pattern="^[A-ZÁÉÍÓÚÃÕ][a-záéíóúãõ]{2,}(\s[A-zÁÉÍÓÚÃÕáéíóúãõ]{2,})*$" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-actions form-group">
+                                        <button type="submit" id="BotaoSubmitCategoria" class="btn btn-success rounded">Salvar</button>
+                                        <button class="btn btn-danger rounded" id="BotaoCancelaCategoriaAdd"><i class="fa fa-ban"></i>Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-4 mx-auto">
+                                <form action="/Categoria/Atualiza" method="post" id="FormEditCategoria" class="form-control">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Nome</div>
+                                            <input type="number" hidden name="categoria.Id" id="idCategoriaEdit" />
+                                            <input type="text" id="nomeCategoriaEdit" name="categoria.Nome" required pattern="^[A-ZÁÉÍÓÚÃÕ][A-záéíóúãõ]{1,}(\s[A-zÁÉÍÓÚÃÕáéíóúãõ]{2,})*$" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-actions form-group">
+                                        <button type="submit" id="BotaoSubmitCategoriaEdit" class="btn btn-success rounded">Salvar</button>
+                                        <button class="btn btn-danger rounded" id="BotaoCancelaCategoriaEdit"><i class="fa fa-ban"></i>Cancelar</button>
+                                    </div>
+                                    <span class="ml-1 msgErroForm" hidden id="msgErroCategoriaEdit"></span>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="bootstrap-data-table-Categorias" class="table-striped table-sm table table-dark table-bordered ">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Ativar <i class="fa fa-check"></i> | Desativar <i class="fa fa-ban"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="nav-subcategorias" role="tabpanel" aria-labelledby="nav-subcategorias-tab">
+                        <div class="row" id="mensagensContainerSubcategorias"></div>
+                        <div class="row">
+                            <div class="col w-25"></div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-success rounded center-block" id="BotaoAddSubcategorias">
+                                    Nova Subcategoria
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="botaoPesquisaSubcategoria" placeholder="Pesquisar por nome..." />
+                            </div>
+                            <div class="col-3">
+                                <select class="form-control" id="selectFiltrarPorCategoria"></select>
+                            </div>
+                            <div class="col w-25"></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6 mx-auto">
+                                <form action="/Categoria/Adiciona" method="post" id="FormAddSubcategoria" class="form-control">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Nome</div>
+                                            <input type="text" id="nomeSubcategoriaAdd" name="categoria.Nome" required pattern="^[A-ZÁÉÍÓÚÃÕ][a-záéíóúãõ]{2,}(\s[A-zÁÉÍÓÚÃÕáéíóúãõ]{2,})*$" class="form-control">
+                                            <select required class="form-control" id="selectSubcategoriaAdd" name="categoria.CategoriaId"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions form-group">
+                                        <button type="submit" id="BotaoSubmitSubcategoria" class="btn btn-success rounded">Salvar</button>
+                                        <button class="btn btn-danger rounded" id="BotaoCancelaSubcategoriaAdd"><i class="fa fa-ban"></i>Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6 mx-auto">
+                                <form action="/Categoria/Atualiza" method="post" id="FormEditSubcategoria" class="form-control">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Nome</div>
+                                            <input type="number" hidden name="categoria.Id" id="idSubcategoriaEdit" />
+                                            <input type="text" id="nomeSubcategoriaEdit" name="categoria.Nome" required pattern="^[A-ZÁÉÍÓÚÃÕ][A-záéíóúãõ]{1,}(\s[A-zÁÉÍÓÚÃÕáéíóúãõ]{2,})*$" class="form-control">
+                                            <select required class="form-control" id="selectSubcategoriaEdit" name="categoria.CategoriaId"></select>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions form-group">
+                                        <button type="submit" id="BotaoSubmitSubcategoriaEdit" class="btn btn-success rounded">Salvar</button>
+                                        <button class="btn btn-danger rounded" id="BotaoCancelaSubcategoriaEdit"><i class="fa fa-ban"></i>Cancelar</button>
+                                    </div>
+                                    <span class="ml-1 msgErroForm" hidden id="msgErroSubcategoriaEdit"></span>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="bootstrap-data-table-Subcategorias" class="table-striped table-sm table table-dark table-bordered ">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Categoria</th>
+                                    <th>Ativar <i class="fa fa-check"></i> | Desativar <i class="fa fa-ban"></i></th>
+                                    <th>CategoriaId</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="nav-marcas" role="tabpanel" aria-labelledby="nav-marcas-tab">
+                        <div class="row" id="mensagensContainerMarcas"></div>
+                        <div class="row">
+                            <div class="col w-25"></div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-success rounded center-block" id="BotaoAddMarcas">
+                                    Nova Marca
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <input type="text" class="form-control" id="botaoPesquisaMarca" placeholder="Pesquisar por nome..." />
+                            </div>
+                            <div class="col w-25"></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-4 mx-auto">
+                                <form action="/Marca/Adiciona" method="post" id="FormAddMarca" class="form-control">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Nome</div>
+                                            <input type="text" id="nomeMarcaAdd" name="marca.Nome" required pattern="^[A-ZÁÉÍÓÚÃÕ][A-záéíóúãõ]{1,}(\s[A-zÁÉÍÓÚÃÕáéíóúãõ]{2,})*$" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-actions form-group">
+                                        <button type="submit" id="BotaoSubmitMarca" class="btn btn-success rounded">Salvar</button>
+                                        <button class="btn btn-danger rounded" id="BotaoCancelaMarcaAdd"><i class="fa fa-ban"></i>Cancelar</button>
+                                    </div>
+                                    <span class="ml-1 msgErroForm" hidden id="msgErroMarcaAdd"></span>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-4 mx-auto">
+                                <form action="/Marca/Atualiza" method="post" id="FormEditMarca" class="form-control">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Nome</div>
+                                            <input type="number" hidden name="marca.Id" id="idMarcaEdit" />
+                                            <input type="text" id="nomeMarcaEdit" name="marca.Nome" required pattern="^[A-ZÁÉÍÓÚÃÕ][A-záéíóúãõ]{1,}(\s[A-zÁÉÍÓÚÃÕáéíóúãõ]{2,})*$" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-actions form-group">
+                                        <button type="submit" id="BotaoSubmitMarcaEdit" class="btn btn-success rounded">Salvar</button>
+                                        <button class="btn btn-danger rounded" id="BotaoCancelaMarcaEdit"><i class="fa fa-ban"></i>Cancelar</button>
+                                    </div>
+                                    <span class="ml-1 msgErroForm" hidden id="msgErroMarcaEdit"></span>
+                                </form>
+                            </div>
+                        </div>
+                        <table id="bootstrap-data-table-Marcas" class="table-striped table table-sm table-dark table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nome</th>
+                                    <th>Ativar <i class="fa fa-check"></i> | Desativar <i class="fa fa-ban"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scriptsProduto {
+    @Scripts.Render("~/bundles/tables/js")
+
+    <script src="~/Content/js/jquery.mask.js"></script>
+    <script src="~/Content/js/vendor/jquery.form.min.js"></script>
+    <script src="~/Content/js/modalFix.js"></script>
+    <script src="~/Content/js/validation/jquery.validate.min.js"></script>
+    <script src="~/Content/js/produto/scriptsForms.js"></script>
+    <script src="~/Content/js/produto/scriptsDataTables.js"></script>
+    <script src="~/Content/js/produto/funcoesCrud.js"></script>
+    <script src="~/Content/js/categoria/scriptsDataTables.js"></script>
+    <script src="~/Content/js/categoria/funcoesCrud.js"></script>
+    <script src="~/Content/js/marca/scriptsDataTables.js"></script>
+    <script src="~/Content/js/marca/funcoesCrud.js"></script>
+}

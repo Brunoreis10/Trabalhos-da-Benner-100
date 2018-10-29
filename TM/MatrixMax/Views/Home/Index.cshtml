@@ -1,0 +1,172 @@
+﻿@{
+    MatrixMax.Models.Usuario usuarioLogado = (MatrixMax.Models.Usuario)HttpContext.Current.Session["usuarioLogado"];
+
+    var hojeC = DateTime.Today.ToString("D").ToCharArray();
+    hojeC[0] = char.ToUpper(hojeC[0]);
+    var hoje = new string(hojeC);
+}
+<!-- TÍTULO CONTEÚDO-->
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>MatrixMax Cartuchos</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">
+                        Dashboard
+                        @if (usuarioLogado.TipoUsuario == 'A')
+                        {
+                            @: Administrador
+                        }
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- TÍTULO CONTEÚDO-->
+<!--CONTEÚDO-->
+<div class="text-center mt-3">
+    @if (HttpContext.Current.Session["Alerta"] != null)
+    {
+        <div class="card-group">
+            <div class="col-sm-7 mx-auto">
+                <div class="animated fadeIn">
+                    <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                        <span class="badge badge-pill badge-success">logado</span> Bem vindo, @usuarioLogado.Pessoa.NomeRazaoSocial!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        HttpContext.Current.Session["Alerta"] = null;
+    }
+    @if (usuarioLogado.TipoUsuario == 'A')
+    {
+        <div class="card-group ml-5 pt-2 border border-dark statsDash rounded mb-3 blocoDash mr-5">
+            <div class="col-lg-12"><h1 class="mb-4 display-4">Relatórios Gerenciais</h1></div>
+            <div class="col-lg-6">
+                <div class="animated fadeIn">
+                    <div class="card blocoDash">
+                        <div class="card-body">
+                            <iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                            <h4 class="mb-3 text-uppercase font-weight-bold">Vendas mensais</h4>
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="animated fadeIn">
+                    <div class="card blocoDash">
+                        <div class="card-body">
+                            <iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+                            <h4 class="mb-3 text-uppercase font-weight-bold">Vendas por categoria</h4>
+                            <canvas id="pieChart" style="width: 595px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section scriptsRelatorios {
+            <script src="~/Content/js/lib/chart-js/Chart.bundle.min.js"></script>
+            <script src="~/Content/js/lib/chart-js/chartjs-plugin-datalabels.min.js"></script>
+            <script src="~/Content/js/lib/chart-js/chartjs-init.js"></script>
+        }
+    }
+    <div class="card-group ml-5 border border-dark statsDash rounded mb-3 blocoDash mr-5">
+        <div class="col-lg-12">
+            <h1 class="pb-2 display-4">@hoje</h1>
+            @if (ViewBag.ContaVendasDia == 0)
+            {<h2 class="pb-2">Nenhuma venda registrada até o momento.</h2>}
+        </div>
+    </div>
+    @if (ViewBag.ContaVendasDia > 0)
+    {
+        <div class="card-group ml-5 border border-dark statsDash rounded mb-3 blocoDash mr-5 pt-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card blocoDash rounded">
+                    <div class="card-body">
+                        <div class="stat-widget-one">
+                            <div class="stat-icon dib"><i class="fa text-success border-success fa-signal"></i></div>
+                            <div class="stat-content dib ml-2 mr-2 text-uppercase">
+                                <div class="stat-text">Produtos vendidos</div>
+                                <div class="stat-digit">@ViewBag.ProdutosVendidosDia</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mx-auto">
+                <div class="card blocoDash rounded">
+                    <div class="card-body">
+                        <div class="stat-widget-one">
+                            <div class="stat-icon dib"><i class="ti-money text-success border-success"></i></div>
+                            <div class="stat-content dib ml-2 mr-2 text-uppercase">
+                                <div class="stat-text">Valor total</div>
+                                @{ double totalBrutoDia = ViewBag.TotalBrutoDia; }
+                                <div class="stat-digit">R$ @totalBrutoDia.ToString("F2")</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card blocoDash rounded">
+                    <div class="card-body">
+                        <div class="stat-widget-one">
+                            <div class="stat-icon dib"><i class="fa text-success border-success fa-shopping-cart"></i></div>
+                            <div class="stat-content dib ml-2 mr-2 text-uppercase">
+                                <div class="stat-text">Vendas registradas</div>
+                                <div class="stat-digit">@ViewBag.ContaVendasDia</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-group ml-5 p-3 border border-dark statsDash rounded mb-3 blocoDash mr-5">
+            <div class="progress mb-2 w-100 font-weight-bold" style="height: 50px;">
+                @foreach (var item in ViewBag.WidgetPorcentagem)
+                {
+                    <div class="progress-bar @item.GetType().GetProperty("ClasseBarra").GetValue(item) progress-bar-striped progress-bar-animated fontePorcentagem"
+                         role="progressbar"
+                         style="width: @item.GetType().GetProperty("Porcentagem").GetValue(item)%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        @item.GetType().GetProperty("Descricao").GetValue(item)
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="card-group ml-5 p-3 border border-dark statsDash rounded mb-3 blocoDash mr-5">
+        @foreach (var item in ViewBag.WidgetEstoque)
+        {
+            <div class="card rounded col-lg-2 col-md-6 no-padding no-shadow mx-auto border-0 @item.GetType().GetProperty("ClasseWidget").GetValue(item)">
+                <div class="card-body ">
+                    <div class="h1 text-muted text-right mb-4">
+                        <i class="fa @item.GetType().GetProperty("IconeWidget").GetValue(item) text-light"></i>
+                    </div>
+                    <div class="h4 mb-0 text-light">
+                        <span class="count">@item.GetType().GetProperty("Quantidade").GetValue(item)</span>
+                    </div>
+                    <small class="text-uppercase font-weight-bold text-light">@item.GetType().GetProperty("Descricao").GetValue(item)</small>
+                    <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!--/.col-->
+</div>
+<!--CONTEÚDO-->

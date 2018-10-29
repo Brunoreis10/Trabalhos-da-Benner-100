@@ -1,0 +1,190 @@
+﻿<!-- TÍTULO CONTEÚDO-->
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Vendas</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Nova venda</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TÍTULO CONTEÚDO-->
+<!--CONTEÚDO-->
+<form action="/Venda/Cadastra" method="post" id="FormCadastraVenda">
+    <div class="container formVenda">
+        <div class="row"><div class="col" id="containerMensagensVenda"></div></div>
+        <div class="row">
+            <div class="col-md m-1">
+                <div class="form-group blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3">
+                    <h5 class="text-center pb-2 display-5">FORMA DE PAGAMENTO</h5>
+                    <select id="formaDePagamento" name="FormaDePagamentoId" class="form-control">
+                        <option value="">Selecione...</option>
+                        @foreach (var fp in ViewBag.FormasDePagamento)
+                        {
+                            <option value="@fp.Id">@fp.Nome</option>
+                        }
+                    </select>
+                    <div id="opcoesCartao">
+                        <div class="row mt-3">
+                            <div class="col">
+                                <select id="bandeiraCartao" name="venda.FormaDePagamento" disabled class="form-control">
+                                    <option value="">Bandeira</option>
+                                    @foreach (var bandeira in ViewBag.Bandeiras)
+                                    {
+                                        <option value="@bandeira.Id">@bandeira.Nome</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <select id="parcelasCartao" name="venda.Parcelas" disabled class="form-control">
+                                    <option value="">Parcelas</option>
+                                    <option value="1">1x</option>
+                                    <option value="2">2x</option>
+                                    <option value="3">3x</option>
+                                    <option value="4">4x</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3">
+                    <h5 class="text-center pb-2 display-5">CLIENTE</h5>
+                    <div class="mb-2"><select id="clienteVenda" name="PessoaId" class="form-control"><option value=""></option></select></div>
+                </div>
+
+                <div class="form-group blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3">
+                    <h5 class="text-center pb-2 display-5">DATA</h5>
+                    <div class="col w-100"></div>
+                    <input type="date" name="Data" id="dataVenda" class="form-control" value="@DateTime.Now.ToString("yyyy'-'MM'-'dd")" />
+                </div>
+
+                <div class="form-group blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3">
+                    <input type="text" hidden name="TipoVenda" id="tipoVenda" value="1" />
+                    <div class="col w-100"></div>
+                    <h5 class="text-center pb-2 display-5">OBSERVAÇÕES</h5>
+                    <textarea class="form-control" rows="3" id="observacaoVenda" name="Observacao"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md m-1">
+                <div class="form-group blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3">
+                    <h5 class="text-center pb-2 display-5">ADICIONAR PRODUTOS</h5>
+                    <select id="produtosVenda" name="venda.Produtos" class="form-control"></select>
+
+                    <div class="form-group mt-3" id="detalhesProdutoVenda">
+                        <div class="row">
+                            <div class="col">
+                                <select id="produtoVendaTipoPreco" name="produtoVendaTipoPreco" class="form-control">
+                                    <option value="">Preço produto</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <input type="number" name="produtoVendaQuantidade" min="1" max="99" id="produtoVendaQuantidade" placeholder="Quantidade" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col w-25"></div>
+                            <div class="col">
+                                <button class="btn btn-success rounded btn-block" id="botaoAdicionaProdutoVenda">Confirmar</button>
+                            </div>
+                            <div class="col w-25"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3">
+                    <table id="tabelaProdutosVenda" class="table rounded table-sm table-bordered table-striped table-dark table-hover text-center">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Produto</th>
+                                <th>Valor</th>
+                                <th>Quantidade</th>
+                                <th colspan="2">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot><tr><td colspan="4">Desconto</td><td id="tdValorDesconto" colspan="2">R$0,00</td></tr></tfoot>
+                    </table>
+                </div>
+
+                <div class="blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3">
+                    <div class="col"><h4 class="text-center pb-2 display-5">VALOR TOTAL</h4><h6 id="labelComDesconto" class="text-center pb-2 display-5">(COM DESCONTO)</h6></div>
+                    <div class="col"><h2 class="text-center pb-2 display-5" id="labelTotalVenda">R$0,00</h2></div>
+                    <button class="btn btn-success btn-block rounded" id="botaoProcessaVenda" type="submit">Registrar Venda</button>
+                </div>
+
+                <div class="blocoVenda p-2 border border-dark border-3 rounded mb-2 mt-3" id="blocoDescontosVenda">
+                    <div class="row m-1">
+                        <div class="col-2">
+                            <label for="venda.DescontoValorFixo" class="pr-1 mt-2 mr-4 form-control-label">Desconto</label>
+                            <label class="switch switch-default switch-secondary-outline-alt switch-pill mt-2 mr-2">
+                                <input type="checkbox" id="toggleDesconto" class="switch-input">
+                                <span class="switch-label"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        <div class="col-4 mt-3 opcoesDesconto cursorDesativado">
+                            <label class="containerRadio cursorDesativado">
+                                Valor fixo
+                                <input type="radio" disabled name="radioDesconto" id="descontoFixo">
+                                <span class="spanRadio"></span>
+                            </label>
+                            <label class="containerRadio cursorDesativado">
+                                Porcentagem
+                                <input type="radio" disabled name="radioDesconto" id="descontoPorcentagem">
+                                <span class="spanRadio"></span>
+                            </label>
+                        </div>
+                        <div class="col-3 mt-3 opcoesDesconto cursorDesativado">
+                            <input type="text" class="form-control-sm mb-1 cursorDesativado" disabled id="valorDesconto" name="venda.DescontoValorFixo" placeholder="Valor..." />
+                            <select id="porcentagemDesconto" name="venda.DescontoPorcento" disabled class="form-control-sm cursorDesativado">
+                                <option value="">%</option>
+                                <option value="5">5%</option>
+                                <option value="10">10%</option>
+                                <option value="15">15%</option>
+                                <option value="20">20%</option>
+                                <option value="25">25%</option>
+                                <option value="30">30%</option>
+                                <option value="35">35%</option>
+                                <option value="40">40%</option>
+                                <option value="45">45%</option>
+                                <option value="50">50%</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="acoesDescontoContainer">
+                        <div class="row mt-2" id="acoesDesconto">
+                            <div class="col w-25"></div>
+                            <div class="col">
+                                <button disabled class="btn btn-success btn-sm rounded btn-block" id="botaoAplicaDesconto">Aplicar</button>
+                            </div>
+                            <div class="col">
+                                <button disabled class="btn btn-warning btn-sm rounded btn-block" id="botaoAlterarDesconto">Alterar</button>
+                            </div>
+                            <div class="col w-25"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--/.col-->
+<!--CONTEÚDO-->
+
+@section scriptsVendas {
+    <script src="~/Content/js/select2.full.min.js"></script>
+    <script src="~/Content/js/jquery.mask.js"></script>
+    <script src="~/Content/js/venda/scriptsVenda.js"></script>
+}

@@ -1,0 +1,264 @@
+﻿.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+body:not(.modal-open) {
+    padding-right: 0px !important;
+}
+
+.btn-link, .btn-link:hover, .btn-link:focus {
+    text-decoration: none;
+    color: white;
+}
+
+.tabelaprodutosbotoes div {
+    float: left;
+}
+
+table.dataTable.table-striped tbody > tr.odd.selected,
+table.dataTable.table-striped tbody > tr.odd > .selected {
+    background-color: #4CAF50;
+}
+
+.erroEditar, .erroAdd {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+}
+
+input.campoInvalido, input.campoInvalido:focus, select.campoInvalido, select.campoInvalido:focus {
+    border: 1px solid red;
+}
+
+.msgErroForm {
+    list-style-type: none;
+    color: red;
+    font-weight: bold;
+}
+
+#FormAddCategoria, #FormAddSubcategoria, #FormAddMarca, #FormEditMarca, #FormEditCategoria, #FormEditSubcategoria {
+    display: none;
+}
+
+.divsJuridicas {
+    display: none;
+}
+
+.scroll {
+    overflow-y: auto;
+}
+
+.border-3 {
+    border-width: 2px !important;
+}
+
+.formVenda {
+    color: white;
+}
+
+.blocoVenda, .blocoDash {
+    background-color: rgba(25, 56, 47, 0.5);
+}
+
+.formVenda select, .formVenda select:focus {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    background-color: transparent;
+    color: white;
+}
+
+.select2-container--bootstrap .select2-selection--single span {
+    border: none;
+}
+
+.select2-container--bootstrap .select2-selection {
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+}
+
+.select2-selection__rendered .form-control {
+    border: none;
+}
+
+.select2-container--bootstrap .select2-selection--single .select2-selection__placeholder, .statsDash, .stat-text, .stat-digit {
+    color: white !important;
+}
+
+.formVenda input, .formVenda input:focus {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.formVenda option {
+    color: grey;
+    font-weight: bold;
+}
+
+.formVenda textarea, .formVenda textarea:focus {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.switch.switch-default .switch-label {
+    background-color: transparent;
+}
+
+.switch.switch-default .switch-handle {
+    background-color: transparent;
+}
+
+.switch-secondary-outline-alt > .switch-input:checked ~ .switch-label {
+    background-color: transparent !important;
+    border-color: white;
+}
+
+.switch-secondary-outline-alt > .switch-input:checked ~ .switch-handle {
+    background: white !important;
+    border-color: white;
+}
+
+.formVenda input::placeholder {
+    color: white;
+}
+
+/* The containerRadio */
+.containerRadio {
+    display: block;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.containerRadio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.spanRadio {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.containerRadio:hover input ~ .spanRadio {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.containerRadio input:checked ~ .spanRadio {
+    background-color: #4CAF50;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.spanRadio:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.containerRadio input:checked ~ .spanRadio:after {
+    display: block;
+}
+
+.cursorDesativado {
+    cursor: not-allowed !important;
+}
+
+/* Style the indicator (dot/circle) */
+.containerRadio .spanRadio:after {
+    top: 6px;
+    left: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+#opcoesCartao, #detalhesProdutoVenda, #acoesDescontoContainer, #blocoDescontosVenda, #labelComDesconto {
+    display: none;
+}
+
+#valorDesconto:disabled, #porcentagemDesconto:disabled {
+    background-color: #e9ecef;
+}
+
+.select2-results__option {
+    color: grey;
+    font-weight: bold;
+}
+
+.dropdownSelect2 .select2-choices {
+    min-height: 150px;
+    overflow-y: auto;
+}
+
+aside.left-panel {
+    width: 220px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+tr.group td {
+    background-color: #212529 !important;
+    color: white !important;
+}
+
+.table-responsive {
+    max-height: 400px;
+    overflow-x: hidden;
+}
+
+.table td {
+    border-top: none;
+}
+
+#dialogReporEstoque {
+    display: none;
+}
+
+.botaoEstoque {
+    text-decoration: none;
+    color: black;
+}
+
+.select2-container--bootstrap .select2-results__group {
+    font-size: 15px;
+    color: darkgreen;
+}
+
+.bg-laranjaEscuro {
+    background-color: #C16815;
+}
+
+.fontePorcentagem{
+    font-size: 15px;
+}
+
+.stat-digit {
+    font-size: 30px;
+    font-weight: bold;
+}

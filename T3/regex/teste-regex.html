@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Regex em JavaScript</title>
+    </head>
+    <body>
+        <form>
+            <input pattern="[0-9]*" />
+            <input type="submit" value="Enviar" />
+        </form>
+    </body>
+<script>
+    var target = "11a22b33c";
+
+    var objetoRegex = /(\d\d)(\w)/g;
+
+    //while (resultado = objetoRegex.exec(target)) { // <- Retorna grupos e resultados.
+    //    console.log(resultado);
+    //    console.log(objetoRegex.lastIndex);
+    //}
+    console.log(objetoRegex.test(target)); //Apenas testa retornando true se houver match.
+
+    //Exemplo 1
+    var anoMesDia = '2007-12-31';
+    anoMesDia = anoMesDia.replace(/-/g, '/');
+    //Método replace() aceita uma regex, substituirá todos os matches.
+    console.log(anoMesDia);
+
+    //Exemplo 2
+    var arquivo = '100,200-150,200;20';
+    var valores = arquivo.split(/[,;-]/); 
+    //split() também aceita uma regex, perimitindo usar múltiplos separadores.
+    console.log(valores);
+
+    //Exemplo 3
+    var codigos = 'A121B12112C12212F12G01';
+    var codigosSeparados = codigos.match(/[A-Za-z]\d+/g);
+    //match() de uma string retorna uma array com todos os matches encontrados na mesma.
+    console.log(codigosSeparados);
+
+    //Exemplo 4
+</script>
+</html>

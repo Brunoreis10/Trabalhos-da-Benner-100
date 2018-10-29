@@ -1,0 +1,114 @@
+﻿@{
+    MatrixMax.Models.Usuario usuarioLogado = (MatrixMax.Models.Usuario)HttpContext.Current.Session["usuarioLogado"];
+    var nome = usuarioLogado.Pessoa.NomeRazaoSocial.Replace(" ", "+");
+}
+
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MatrixMax - @ViewBag.Title</title>
+    <meta name="description" content="Sufee Admin - HTML5 Admin Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="~/Content/Imagens/favicon.png">
+
+    @Styles.Render("~/bundles/css")
+    <!-- <link rel="stylesheet" href="assets/css/bootstrap-select.less"> -->
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
+
+</head>
+<body>
+    <!-- BARRA LATERAL -->
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand p-2 pb-3" href="/Home"><img src="~/Content/Imagens/matrix.png" alt="Logo"></a>
+            </div>
+
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="@(Request.Url.AbsolutePath.EndsWith("/Home") ? "active" : "")">
+                        <a href="/Home"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                    </li>
+                    @if (usuarioLogado.TipoUsuario == 'A')
+                    {
+                        <h3 class="menu-title">Administrador</h3><!-- /.menu-title -->
+                        <li class="@(Request.Url.AbsolutePath.EndsWith("/Admin") ? "active" : "")">
+                            <a href="/Admin"> <i class="menu-icon fa fa-users"></i>Gerenciar usuários</a>
+                        </li>
+                    }
+                    <h3 class="menu-title">Vendas</h3><!-- /.menu-title -->
+                    <li class="@(Request.Url.AbsolutePath.EndsWith("/Venda") ? "active" : "")">
+                        <a href="/Venda"> <i class="menu-icon fa fa-money"></i>Nova Venda</a>
+                    </li>
+                    <li class="@(Request.Url.AbsolutePath.EndsWith("/Venda/Historico") ? "active" : "")">
+                        <a href="/Venda/Historico"> <i class="menu-icon fa fa-calendar"></i>Histórico</a>
+                    </li>
+                    <h3 class="menu-title">Produtos</h3><!-- /.menu-title -->
+                    <li class="@(Request.Url.AbsolutePath.EndsWith("/Produto/Estoque") ? "active" : "")">
+                        <a href="/Produto/Estoque"> <i class="menu-icon fa fa-truck"></i>Controle de Estoque</a>
+                    </li>
+                    <li class="@(Request.Url.AbsolutePath.EndsWith("/Produto") ? "active" : "")">
+                        <a href="/Produto"> <i class="menu-icon fa fa-list"></i>Gerenciar produtos</a>
+                    </li>
+                    <h3 class="menu-title">Clientes</h3><!-- /.menu-title -->
+                    <li class="@(Request.Url.AbsolutePath.EndsWith("/Cliente/Novo") ? "active" : "")">
+                        <a href="/Cliente/Novo"> <i class="menu-icon fa fa-plus-square"></i>Novo Cliente</a>
+                    </li>
+                    <li class="@(Request.Url.AbsolutePath.EndsWith("/Cliente") ? "active" : "")">
+                        <a href="/Cliente"> <i class="menu-icon fa fa-users"></i>Gerenciar Clientes</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </aside>
+    <!-- BARRA LATERAL -->
+    <!-- HEADER E CONTENT -->
+    <div id="right-panel" class="right-panel">
+
+        <!-- TOPO PÁGINA-->
+        <header id="header" class="header pb-0 pt-1">
+            <div class="header-menu">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="user-area float-left">
+                            <img class="user-avatar rounded-circle pb-1" src="https://ui-avatars.com/api/?background=4CAF50&color=fff&length=@(usuarioLogado.Pessoa.NomeRazaoSocial.Split(' ').Length)&name=@usuarioLogado.Pessoa.NomeRazaoSocial.Replace(" ", "+")" alt="User Avatar">
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="user-area float-right mt-2">
+                            <div><a class="col w-25" href="/Login/Logout"><i class="fa fa-power-off"></i> Logout</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- TOPO PÁGINA-->
+        @RenderBody()
+    </div>
+    <!-- HEADER E CONTENT -->
+    @Scripts.Render("~/bundles/js")
+    @RenderSection("scriptsProduto", false)
+    @RenderSection("scriptsCliente", false)
+    @RenderSection("scriptsRelatorios", false)
+    @RenderSection("scriptsVendas", false)
+    @RenderSection("scriptsHistoricoVendas", false)
+    @RenderSection("scriptsUsuarios", false)
+    @RenderSection("scriptsEstoque", false)
+</body>
+</html>

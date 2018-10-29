@@ -1,0 +1,32 @@
+﻿@model CaelumEstoque.Models.Produto
+
+<center>
+    <table class="table table-bordered">
+        <tr>
+            <th>Id</th>
+            <td>@Model.Id</td>
+        </tr>
+        <tr>
+            <th>Nome</th>
+            <td>@Model.Nome</td>
+        </tr>
+        <tr>
+            <th>Categoria</th>
+            <td>@Model.Categoria.Nome</td>
+        </tr>
+        <tr>
+            <th>Preço</th>
+            <td>@Model.Preco</td>
+        </tr>
+        <tr>
+            <th>Descrição</th>
+            <td>@Model.Descricao</td>
+        </tr>
+        <tr>
+            <th>Quantidade</th>
+            <td>@Model.Quantidade</td>
+        </tr>
+    </table>
+    <br /><br />
+    @Html.RouteLink("Voltar", "ListaProdutos", null, new { @class = "btn btn-info" })
+</center>

@@ -1,0 +1,188 @@
+﻿<!-- TÍTULO CONTEÚDO-->
+<div class="breadcrumbs">
+    <div class="col-sm-4">
+        <div class="page-header float-left">
+            <div class="page-title">
+                <h1>Clientes</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="page-header float-right">
+            <div class="page-title">
+                <ol class="breadcrumb text-right">
+                    <li class="active">Novo cliente</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TÍTULO CONTEÚDO-->
+<!--CONTEÚDO-->
+<div class="p-3 text-center">
+    <div class="card">
+        <div class="card-header">
+            <h3>Cadsatro de Clientes</h3>
+        </div>
+        <div class="card-body">
+            <div class="default-tab">
+                <div class="row" id="mensagensContainerCliente"></div>
+                <form action="/Cliente/Adiciona" method="post" id="FormDadosPessoa" class="">
+                    <div class="col-lg-6">
+                        <div class="card rounded">
+                            <div class="card-header text-center"><h6 class="display-5">Etapa 1: Dados Pessoais</h6></div>
+                            <div class="card-body card-block mb-2">
+                                <div class="row text-center mt-2 mb-3">
+                                    <div class="col">
+                                        <div class="btn-group btn-group-sm btn-group-toggle mb-2" data-toggle="buttons">
+                                            <label class="btn btn-secondary rounded-left text-center active">
+                                                <input type="radio" name="radioPessoaFisica" id="radioPessoaFisica" checked> Pessoa física
+                                            </label>
+                                            <label class="btn btn-secondary rounded-right">
+                                                <input type="radio" name="radioPessoaJuridica" id="radioPessoaJuridica"> Pessoa jurídica
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="text" id="tipoPessoa" hidden name="pessoa.TipoPessoa" value="F" class="form-control">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Email</div>
+                                        <input type="text" id="emailPessoa" name="pessoa.Email" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Telefone</div>
+                                        <input type="text" id="telefonePessoa" name="pessoa.Telefone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group divsFisicas">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Nome</div>
+                                        <input type="text" id="nomePessoa" name="pessoa.NomeRazaoSocial" class="form-control inputsFisicos">
+                                    </div>
+                                </div>
+                                <div class="form-group divsFisicas">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">CPF</div>
+                                        <input type="text" id="cpfPessoa" name="pessoa.CpfCnpj" class="form-control inputsFisicos">
+                                    </div>
+                                </div>
+                                <div class="form-group divsJuridicas" id="divRazaoSocialPessoa">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Razão Social</div>
+                                        <input type="text" id="razaoSocialPessoa" name="pessoa.NomeRazaoSocial" disabled class="form-control inputsJuridicos">
+                                    </div>
+                                </div>
+                                <div class="form-group divsJuridicas" id="divCNPJPessoa">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">CNPJ</div>
+                                        <input type="text" id="cnpjPessoa" name="pessoa.CpfCnpj" disabled class="form-control inputsJuridicos">
+                                    </div>
+                                </div>
+                                <div class="form-group divsJuridicas" id="divInscricaoEstadualPessoa">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Inscrição Estadual</div>
+                                        <input type="text" id="inscricaoEstadualPessoa" name="pessoa.InscricaoEstadual" disabled class="form-control inputsJuridicos">
+                                    </div>
+                                </div>
+                                <div class="form-group divsJuridicas" id="divNomeFantasiaPessoa">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Nome Fantasia</div>
+                                        <input type="text" id="nomeFantasiaPessoa" name="pessoa.NomeFantasia" disabled class="form-control inputsJuridicos">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="card rounded">
+                                    <div class="card-body card-block">
+                                        <div class="form-actions form-group text-center mb-0">
+                                            <div class="col w-100 mb-2">
+                                                <button type="reset" class="btn btn-block btn-danger rounded">
+                                                    <i class="fa fa-ban"></i> Limpar
+                                                </button>
+                                            </div>
+                                            <div class="col w-100">
+                                                <button type="submit" class="btn btn-success btn-block rounded">
+                                                    <i class="fa fa-check"></i> Cadastrar cliente
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card rounded">
+                            <div class="card-header text-center"><h6 class="display-5">Etapa 2: Endereço</h6></div>
+                            <div class="card-body card-block">
+                                <input type="text" id="pessoaEndereco" hidden name="pessoa.Endereco.PessoaId" class="form-control">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">CEP</div>
+                                        <input type="text" id="cepEndereco" name="pessoa.Endereco.Cep" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Logradouro</div>
+                                        <input type="text" id="logradouroEndereco" name="pessoa.Endereco.Logradouro" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Número</div>
+                                        <input type="text" id="numeroEndereco" name="pessoa.Endereco.Numero" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Complemento</div>
+                                        <input type="text" id="complementoEndereco" name="pessoa.Endereco.Complemento" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Bairro</div>
+                                        <input type="text" id="bairroEndereco" name="pessoa.Endereco.Bairro" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Cidade</div>
+                                        <input type="text" id="cidadeEndereco" name="pessoa.Endereco.Cidade" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Estado</div>
+                                        <input type="text" id="estadoEndereco" name="pessoa.Endereco.Estado" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon w-25">Referência</div>
+                                        <input type="text" id="referenciaEndereco" name="pessoa.Endereco.Referencia" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.col-->
+<!--CONTEÚDO-->
+
+@section scriptsCliente {
+    <script src="~/Content/js/jquery.mask.js"></script>
+    <script src="~/Content/js/vendor/jquery.form.min.js"></script>
+    <script src="~/Content/js/modalFix.js"></script>
+    <script src="~/Content/js/validation/jquery.validate.min.js"></script>
+    <script src="~/Content/js/cliente/scriptsForms.js"></script>
+}
